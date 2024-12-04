@@ -1,0 +1,12 @@
+{
+    "name": "proshop-v2",
+    "version": "2.0.0",
+    "description": "eCommerce application built with the MEARN stack",
+    "type": "module",
+    "main": "server.js",
+    "scripts": {
+        "start": "backend/server.js"
+    },
+    "author": "",
+    "license": "MIT"
+}
