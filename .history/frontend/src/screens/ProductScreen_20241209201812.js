@@ -6,21 +6,19 @@ import {Row, Col, Image, ListGroup, Card, Button} from 'react-bootstrap';
 import Rating from '../components/Rating';
 
 const ProductScreen = () => {
-  const [product, setProduct] = useState ({});
+  const [products, setProducts] = useState ([]);
+
+  useEffect (() => {
+    const fetchProducts = async () => {
+      const {data} = await axios.get ('/api/products');
+      setProducts (data);
+    };
+
+    fetchProducts ();
+  }, []);
 
   const {id: productId} = useParams ();
-
-  useEffect (
-    () => {
-      const fetchProduct = async () => {
-        const {data} = await axios.get (`/api/products/${productId}`);
-        setProduct (data);
-      };
-
-      fetchProduct ();
-    },
-    [productId]
-  );
+  const product = products.find (p => p._id === +productId);
 
   return (
     <React.Fragment>
