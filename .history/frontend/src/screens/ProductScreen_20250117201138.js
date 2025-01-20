@@ -3,17 +3,23 @@ import {Link} from 'react-router-dom';
 import {useParams} from 'react-router-dom';
 import {Row, Col, Image, ListGroup, Card, Button} from 'react-bootstrap';
 import Rating from '../components/Rating';
-import products from '../products';
+import { useGetProductDetailsQuery } from '../slices/productsApiSlice';
 
 const ProductScreen = () => {
   const {id: productId} = useParams ();
-  const product = products.find (p => p._id === +productId);
+
+  const {data: product, error, isLoading} = useGetProductDetailsQuery (productId);
 
   return (
     <React.Fragment>
       <Link to="/" className="btn btn-light my-3">Go Back</Link>
 
-      <Row>
+      {isLoading ? (
+        <h2>Loading...</h2>
+      ) : error ? (
+        <div>{error?.data?.message || error.error}</div>
+      ) : (
+        <Row>
         <Col md={5}>
           <Image src={product.image} alt={product.name} fluid />
         </Col>
@@ -65,6 +71,9 @@ const ProductScreen = () => {
           </Card>
         </Col>
       </Row>
+      )}
+
+      
     </React.Fragment>
   );
 };
