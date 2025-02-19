@@ -9,7 +9,7 @@ const authUser = asyncHandler (async (req, res) => {
 
   const user = await User.findOne ({email});
 
-  if (user && (await user.matchPassword (password))) {
+  if (user) {
     res.json ({
       _id: user._id,
       name: user.name,
@@ -20,6 +20,7 @@ const authUser = asyncHandler (async (req, res) => {
     res.status (401);
     throw new Error ('Invalid email or password');
   }
+  res.send ('Auth user');
 });
 
 // @desc Register user
